@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundHeading from "./components/BackgroundHeading";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -7,7 +7,9 @@ import Sidebar from "./components/Sidebar";
 import { defaultItems } from "./lib/constants";
 
 function App() {
-  const [items, setItems] = useState(defaultItems);
+  const [items, setItems] = useState(
+    () => JSON.parse(localStorage.getItem("items")) || defaultItems
+  );
   const totalNumberOfItems = items.length;
   const totalPackedItems = items.filter((item) => item.packed).length;
 
@@ -60,12 +62,24 @@ function App() {
     setItems(newItems);
   };
 
+  useEffect(() => {
+    const serializedItems = JSON.stringify(items);
+    localStorage.setItem("items", serializedItems);
+  }, [items]);
+
   return (
     <>
       <BackgroundHeading />
       <main>
-        <Header totalNumberOfItems={totalNumberOfItems} totalPackedItems={totalPackedItems} />
-        <ItemList items={items} handleRemoveItem={handleRemoveItem} handleToggleItem={handleToggleItem} />
+        <Header
+          totalNumberOfItems={totalNumberOfItems}
+          totalPackedItems={totalPackedItems}
+        />
+        <ItemList
+          items={items}
+          handleRemoveItem={handleRemoveItem}
+          handleToggleItem={handleToggleItem}
+        />
         <Sidebar
           handleAddItem={handleAddItem}
           handleRemoveAllItems={handleRemoveAllItems}
@@ -80,4 +94,3 @@ function App() {
 }
 
 export default App;
-
