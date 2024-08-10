@@ -8,6 +8,8 @@ import { defaultItems } from "./lib/constants";
 
 function App() {
   const [items, setItems] = useState(defaultItems);
+  const totalNumberOfItems = items.length;
+  const totalPackedItems = items.filter((item) => item.packed).length;
 
   const handleAddItem = (newItemText) => {
     const newItem = {
@@ -62,7 +64,7 @@ function App() {
     <>
       <BackgroundHeading />
       <main>
-        <Header />
+        <Header totalNumberOfItems={totalNumberOfItems} totalPackedItems={totalPackedItems} />
         <ItemList items={items} handleRemoveItem={handleRemoveItem} handleToggleItem={handleToggleItem} />
         <Sidebar
           handleAddItem={handleAddItem}
