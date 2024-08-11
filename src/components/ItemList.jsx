@@ -1,19 +1,14 @@
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
 import Select from "react-select";
+import { sortingOptions } from "./../lib/constants";
+import { useItemStore } from "./../stores/itemsStore";
 import EmptyView from "./EmptyView";
 
-const sortingOptions = [
-  { value: "default", label: "Sort by default" },
-  { value: "packed", label: "Sort by packed" },
-  { value: "unpacked", label: "Sort by unpacked" },
-];
-
-export default function ItemList({
-  items,
-  handleRemoveItem,
-  handleToggleItem,
-}) {
+export default function ItemList() {
+  const items = useItemStore((state) => state.items);
+  const removeItem = useItemStore((state) => state.removeItem);
+  const toggleItem = useItemStore((state) => state.toggleItem);
   const [sortBy, setSortBy] = useState("default");
 
   const sortedItems = useMemo(() => {
@@ -44,17 +39,13 @@ export default function ItemList({
         <Item
           key={index}
           item={item}
-          onRemoveItem={handleRemoveItem}
-          onToggleItem={handleToggleItem}
+          onRemoveItem={removeItem}
+          onToggleItem={toggleItem}
         />
       ))}
     </ul>
   );
 }
-
-ItemList.propTypes = {
-  items: PropTypes.array.isRequired,
-};
 
 function Item({ item, onRemoveItem, onToggleItem }) {
   return (
@@ -71,3 +62,9 @@ function Item({ item, onRemoveItem, onToggleItem }) {
     </li>
   );
 }
+
+Item.propTypes = {
+  item: PropTypes.object.isRequired,
+  onRemoveItem: PropTypes.func.isRequired,
+  onToggleItem: PropTypes.func.isRequired,
+};
