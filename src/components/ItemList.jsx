@@ -14,11 +14,11 @@ export default function ItemList() {
   const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
       if (sortBy === "packed") {
-        return a.packed === b.packed ? 0 : a.packed ? 1 : -1;
+        return a.packed === b.packed ? 0 : a.packed ? -1 : 1;
       }
 
       if (sortBy === "unpacked") {
-        return a.packed === b.packed ? 0 : a.packed ? -1 : 1;
+        return a.packed === b.packed ? 0 : a.packed ? 1 : -1;
       }
     });
   }, [items, sortBy]);
