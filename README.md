@@ -29,4 +29,10 @@ To download and use this app, follow these steps:
 3. Install the dependencies: `npm install`
 4. Start the development server: `npm run dev`
 
+## Live Demo
+
+Feel free to check it here! ⬇️🕹️
+
+[![flexbox](https://img.shields.io/badge/pack_the_backpack-DC5F00?style=for-the-badge&logo=javascript&logoColor=white)](https://pack-the-backpack.vercel.app/)
+
 Happy packing! 🎉🧳
